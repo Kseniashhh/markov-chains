@@ -2,6 +2,8 @@
 
 from random import choice
 
+from sys import argv
+
 
 def open_and_read_file(file_path):
     """Take file path as string; return text as string.
@@ -10,10 +12,13 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
+    filename = open(argv[1]).read()
     opened_file = open(file_path).read()
 
-    #print (opened_file)
-    return opened_file
+    combined = filename + opened_file
+
+    #print (combined)
+    return combined
 
 
 def make_chains(text_string):
@@ -74,10 +79,10 @@ def make_text(chains):
 input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+combined = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(combined)
 
 # Produce random text
 random_text = make_text(chains)
