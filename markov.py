@@ -12,7 +12,7 @@ def open_and_read_file(file_path):
 
     opened_file = open(file_path).read()
 
-    print (opened_file)
+    #print (opened_file)
     return opened_file
 
 
@@ -43,8 +43,15 @@ def make_chains(text_string):
 
     chains = {}
 
-    # your code goes here
+    lst = text_string.split()
 
+    for i in range(len(lst)-2):
+    	if (lst[i],lst[i+1]) in chains:
+    		chains[(lst[i],lst[i+1])].append(lst[i+2])
+    	else:
+    		chains[(lst[i],lst[i+1])] = [lst[i+2]]
+
+    #print (chains)
     return chains
 
 
