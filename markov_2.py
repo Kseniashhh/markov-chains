@@ -12,16 +12,16 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    #filename = open(argv[1]).read()
+    filename = open(argv[1]).read()
     opened_file = open(file_path).read()
 
-    combined = opened_file
+    combined = opened_file + filename
 
     #print (combined)
     return combined
 
 
-def make_chains(text_string, n_gram):
+def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -47,6 +47,7 @@ def make_chains(text_string, n_gram):
     """
 
     chains = {}
+    n_gram = int(argv[2])
 
     lst = text_string.split()
     n = 0
@@ -67,7 +68,7 @@ def make_chains(text_string, n_gram):
         else:
             chains[dict_key] = [lst[i + n_gram]]
 
-    print (chains)
+    #print (chains)
     return chains
 
 
@@ -75,12 +76,19 @@ def make_text(chains):
     """Return text from chains."""
 
     words = []
+    n_gram = int(argv[2])
     current_key = choice(list(chains))
-    words.extend([current_key[0],current_key[1]])
+    i = 0
+    while i < n_gram:
+        words.append(current_key[i])
+        i += 1
+
     while current_key in chains:
-    	chosen_word = choice(chains[current_key])
-    	words.append(chosen_word)
-    	current_key = (current_key[1],chosen_word)
+        chosen_word = choice(chains[current_key])
+        words.append(chosen_word)
+        current_key = list(current_key[1:])
+        current_key.append(chosen_word)
+        current_key= tuple(current_key)
 
     print (" ".join(words))
 
@@ -93,7 +101,7 @@ input_path = "green-eggs.txt"
 combined = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(combined,3)
+chains = make_chains(combined)
 
 # Produce random text
 random_text = make_text(chains)
