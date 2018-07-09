@@ -86,7 +86,7 @@ def make_text(chains):
         words.append(current_key[i])
         i += 1
 
-    words.extend(current_key)
+    #words.extend(current_key)
 
     while current_key in chains:
         chosen_word = choice(chains[current_key])
