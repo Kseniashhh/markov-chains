@@ -51,7 +51,7 @@ def make_chains(text_string):
 
     lst = text_string.split()
     n = 0
-    k=0
+    #k=0
     key_list = []
     for i in range(len(lst)- n_gram):
         k = i
@@ -79,9 +79,14 @@ def make_text(chains):
     n_gram = int(argv[2])
     current_key = choice(list(chains))
     i = 0
+    while current_key[0][0].islower():
+        current_key = choice(list(chains))
+
     while i < n_gram:
         words.append(current_key[i])
         i += 1
+
+    words.extend(current_key)
 
     while current_key in chains:
         chosen_word = choice(chains[current_key])
@@ -89,6 +94,14 @@ def make_text(chains):
         current_key = list(current_key[1:])
         current_key.append(chosen_word)
         current_key= tuple(current_key)
+
+    #print (" ".join(words))
+
+    
+    while words[-1][-1] not in '.!?':
+        del words[-1]
+
+
 
     print (" ".join(words))
 
